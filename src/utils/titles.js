@@ -1,0 +1,20 @@
+export const titles = {
+  'EDIT': 'Sửa',
+  'DELETE': 'Xóa',
+  'CLOSE': 'Đóng',
+  'VIEW': 'Chi tiết',
+  'EXPAND': 'Mở rộng',
+  'COLLAPSE': 'Thu nhỏ',
+  'COPPY': 'Sao chép',
+  'DUBLICATE': 'Sao chép',
+  'REPORT_BTS': 'Báo cáo đánh giá trạm',
+  'REPORT_ITEMS': 'Báo cáo đánh giá thiết bị',
+  'ZOOM_IN': 'Phóng to',
+  'ZOOM_OUT': 'Thu nhỏ',
+  'RESET': 'Mặc định',
+  'AVATAR': 'Ảnh đại diện',
+  'LOGO': 'Ảnh logo',
+  'BANNER': 'Ảnh banner',
+  'ROTATE': 'Xoay ảnh',
+  'DRONE_INFORMATION': 'Thông tin drone'
+};
