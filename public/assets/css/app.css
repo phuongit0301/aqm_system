@@ -1,3 +1,89 @@
 .inline-block {
   display: inline-block;
 }
+.air-quality-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.air-quality-area > span {
+  justify-content: right;
+}
+.equal {
+  display: flex;
+}
+.panel-full-height {
+  height: 94%;
+}
+.full-height {
+  height: 100%;
+}
+.vertical-center {
+  display: flex;
+  align-items: center;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.flex-row-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.air-quality-area {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+.dropdown-no-border {
+  border: 0
+}
+.media {
+  margin-top: 0;
+}
+.aqi-container {
+  margin-top: 30px;
+}
+.statistical-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0 50px;
+}
+
+/*======== style date range picker */
+.inputFromTo, .btn-toolbar {
+  margin-left: 15px;
+}
+.DayPickerInput input {
+  border-radius: 3px;
+  outline: 0;
+  border: 1px solid #ccc;
+  padding: 4px 10px;
+  line-height: 1.5;
+}
+.inputFromTo .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+    background-color: #f0f8ff !important;
+    color: #4a90e2;
+  }
+  .inputFromTo .DayPicker-Day {
+    border-radius: 0 !important;
+  }
+  .inputFromTo .DayPicker-Day--start {
+    border-top-left-radius: 50% !important;
+    border-bottom-left-radius: 50% !important;
+  }
+  .inputFromTo .DayPicker-Day--end {
+    border-top-right-radius: 50% !important;
+    border-bottom-right-radius: 50% !important;
+  }
+  .inputFromTo .DayPickerInput-Overlay {
+    width: 550px;
+  }
+  .inputFromTo-to .DayPickerInput-Overlay {
+    margin-left: -198px;
+  }
+  /*======== end style date range picker */

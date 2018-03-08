@@ -3,12 +3,19 @@ import { Button, FormGroup, FormControl, ControlLabel, Grid, Row, Col, Media,
 ButtonToolbar, Dropdown, DropdownButton, MenuItem, Panel  } from "react-bootstrap";
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
-import DateRangePicker from 'react-bootstrap-daterangepicker';
-// you will need the css that comes with bootstrap@3. if you are using
-// you will also need the css that comes with bootstrap-daterangepicker
-import 'bootstrap-daterangepicker/daterangepicker.css';
+import fusioncharts from 'fusioncharts';
+// Load the charts module
+import charts from 'fusioncharts/fusioncharts.charts';
+import ReactFC from 'react-fusioncharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from 'recharts';
 
 import MapContainer from '../Map/Index';
+// import GaugeChart from '../Charts/GaugeChart';
+// import the component
+import ReactSpeedometer from "react-d3-speedometer";
+import IndexGauge from '../Charts/IndexGauge';
+import DateRangePicker from '../DateRangePicker/Index';
+import { lineChartData, pieChartData } from '../../config/charts';
 
 class Home extends Component {
 
@@ -16,126 +23,165 @@ class Home extends Component {
     super(props);
   }
 
+
   render() {
     var today = new Date(),
     date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    
+    let getName = (x) => { return x.name };
+
     return(
       <div className="home-container">
         <Grid fluid>
           <Row className="show-grid">
-            <Col xs={12} md={6}>
+            <Col xs={12} md={4}>
               <MapContainer />
             </Col>
-            <Col xs={12} md={6}>
-            
-              <Row className="profile-container">
-                <Col xs={9}>
-                  <div>
-                    <Media>
-                        <Media.Left>
-                          <i className="fas fa-map-marker-alt fa-2x"></i>
-                        </Media.Left>
-                        <Media.Body>
-                          No1. Kim Anh Building, Duy Tan, Ha Noi
-                        </Media.Body>
-                    </Media>
-                    
-                    <Media>
-                        <Media.Left>
-                          <i className="far fa-clock fa-2x"></i>
-                        </Media.Left>
-                        <Media.Body>
-                          Cập nhật lần cuối {date}
-                        </Media.Body>
-                    </Media>
-                  </div>
-                </Col>
-                <Col xs={3}>
-                  <div>
-                    <ButtonToolbar>
-                      <DropdownButton
-                        bsSize="small"
-                        title="Thinklabs TH"
-                        id="dropdown-size-small"
-                      >
-                        <MenuItem eventKey="1">Thinklabs TH</MenuItem>
-                        <MenuItem eventKey="2">Thinklabs TH 1</MenuItem>
-                        <MenuItem eventKey="3">Thinklabs TH 2</MenuItem>
-                        <MenuItem divider />
-                        <MenuItem eventKey="4">Thinklabs TH 4</MenuItem>
-                      </DropdownButton>
-                    </ButtonToolbar>
-                    </div>
-                </Col>
-              </Row>
-              
+            <Col xs={12} md={8}>
+              <Panel>
+                <Panel.Body>
+                  <Row className="profile-container">
+                    <Col xs={12} className="flex-row">
+                        <Media>
+                            <Media.Left>
+                              <i className="fas fa-map-marker-alt fa-2x"></i>
+                            </Media.Left>
+                            <Media.Body>
+                              No1. Kim Anh Building, Duy Tan, Ha Noi
+                            </Media.Body>
+                        </Media>
+
+                        <Media>
+                            <Media.Left>
+                              <i className="far fa-clock fa-2x"></i>
+                            </Media.Left>
+                            <Media.Body>
+                              Cập nhật lần cuối {date}
+                            </Media.Body>
+                        </Media>
+                        <ButtonToolbar>
+                          <DropdownButton
+                            bsSize="small"
+                            title="Thinklabs TH"
+                            id="dropdown-size-small"
+                          >
+                            <MenuItem eventKey="1">Thinklabs TH</MenuItem>
+                            <MenuItem eventKey="2">Thinklabs TH 1</MenuItem>
+                            <MenuItem eventKey="3">Thinklabs TH 2</MenuItem>
+                            <MenuItem divider />
+                            <MenuItem eventKey="4">Thinklabs TH 4</MenuItem>
+                          </DropdownButton>
+                        </ButtonToolbar>
+                    </Col>
+                  </Row>
+                </Panel.Body>
+              </Panel>
+
               <Row className="air-quality-container">
-                <Col xs={7}>
-                  <div className="text-center">
-                    <p>Chỉ số chất lượng không khí</p>
-                    <p><i className="far fa-smile fa-2x"></i><span>50</span></p>
-                    <p>Tốt</p>
-                    <p>Không ảnh hưởng đến sức khỏe</p>
-                  </div>
-                </Col>
-                <Col xs={5}>
-                  <div className="fire-area">
-                    <i className="fas fa-fire fa-2x"></i>
-                    <span>23&#8451;</span>
-                  </div>
-                  <div className="tint-area">
-                    <i className="fas fa-tint fa-2x"></i>
-                    <span>70%</span>
-                  </div>
-                  <div className="tvoc-area">
-                    <h3 className="pull-left">TVOC</h3>
-                    <span className="pull-right">23 ppm</span>
-                  </div>
+                <Col xs={12} className="flex-row">
+                  <ReactSpeedometer
+                      value={500}
+                      segments={3}
+                      width={250}
+                      height={250}
+                      needleTransitionDuration={4000}
+                      needleTransition="easeElastic"
+                      currentValueText="${value}"
+                   />
+                   <ReactSpeedometer
+                       value={500}
+                       width={250}
+                       height={250}
+                       segments={3}
+                       needleTransitionDuration={4000}
+                       needleTransition="easeElastic"
+                       currentValueText="${value} ppm"
+                    />
                 </Col>
               </Row>
-              
-              <Row className="aqi-container">
-                <Col xs={7}>
-                  <div>
-                    <Panel>
-                      <Panel.Heading>Chỉ số AQI cho từng thông số</Panel.Heading>
-                      <Panel.Body>
-                        <ul>
-                          <li>CO 40</li>
-                          <li>SO2 40</li>
-                          <li>O3 40</li>
-                          <li>CO2 40</li>
-                          <li>NH3 40</li>
-                          <li>PM2.5 40</li>
-                        </ul>
-                      </Panel.Body>
-                    </Panel>
-                  </div>
-                </Col>
-                <Col xs={5}>
-                  <div>
-                    <Panel>
-                      <Panel.Heading>Chỉ số khác</Panel.Heading>
-                      <Panel.Body>
-                        <ul>
-                          <li>PM1.0 40 ppm</li>
-                          <li>Light 40 LUX</li>
-                          <li>PM10 40 ppm</li>
-                        </ul>
-                      </Panel.Body>
-                    </Panel>
-                  </div>
-                </Col>
-              </Row>
-              
-              <Row className="graph-container">
-                  <Col xs={12}>
-                    <Panel>
-                      <Panel.Body>
-                        <div className="inline-block">
+            </Col>
+          </Row>
+
+          <Row className="aqi-container equal">
+            <Col xs={12} md={8}>
+                <Panel>
+                  <Panel.Heading>Chỉ số AQI cho từng thông số</Panel.Heading>
+                  <Panel.Body className="flex-row-wrap">
+                      <ReactSpeedometer
+                          value={500}
+                          width={240}
+                          height={240}
+                          segments={3}
+                          needleTransitionDuration={4000}
+                          needleTransition="easeElastic"
+                          currentValueText="${value} ppm"
+                       />
+                       <ReactSpeedometer
+                           value={500}
+                           width={240}
+                           height={240}
+                           segments={3}
+                           needleTransitionDuration={4000}
+                           needleTransition="easeElastic"
+                           currentValueText="${value} ppm"
+                        />
+                        <ReactSpeedometer
+                            value={500}
+                            width={240}
+                            height={240}
+                            segments={3}
+                            needleTransitionDuration={4000}
+                            needleTransition="easeElastic"
+                            currentValueText="${value} ppm"
+                         />
+                         <ReactSpeedometer
+                             value={500}
+                             width={240}
+                             height={240}
+                             segments={3}
+                             needleTransitionDuration={4000}
+                             needleTransition="easeElastic"
+                             currentValueText="${value} ppm"
+                          />
+                          <ReactSpeedometer
+                              value={500}
+                              width={240}
+                              height={240}
+                              segments={3}
+                              needleTransitionDuration={4000}
+                              needleTransition="easeElastic"
+                              currentValueText="${value} ppm"
+                           />
+                           <ReactSpeedometer
+                               value={500}
+                               width={240}
+                               height={240}
+                               segments={3}
+                               needleTransitionDuration={4000}
+                               needleTransition="easeElastic"
+                               currentValueText="${value} ppm"
+                            />
+                  </Panel.Body>
+                </Panel>
+            </Col>
+            <Col xs={12} md={4}>
+                <Panel>
+                  <Panel.Heading>Chỉ số khác</Panel.Heading>
+                  <Panel.Body>
+
+                  </Panel.Body>
+                </Panel>
+            </Col>
+          </Row>
+
+          <Row className="graph-container">
+              <Col xs={12}>
+                <Panel>
+                  <Panel.Body>
+                  <Row>
+                    <Col xs={12}>
+                        <div className="statistical-container">
+                          <span>Thống kê</span>
                           <ButtonToolbar>
-                            <span className="pull-left">Thống kê</span>
                             <DropdownButton
                               bsSize="small"
                               title="CO2"
@@ -148,16 +194,37 @@ class Home extends Component {
                               <MenuItem eventKey="PM2">PM2</MenuItem>
                             </DropdownButton>
                           </ButtonToolbar>
+
+                          <DateRangePicker />
                         </div>
-                        <div className="inline-block">
-                          <DateRangePicker alwaysShowCalendars startDate="1/1/2014" endDate="3/1/2014" />
+                      </Col>
+                    </Row>
+
+                    <Row>
+                      <Col xs={7}>
+                        <div>
+                          <LineChart width={600} height={300} data={lineChartData}
+                                margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                             <XAxis dataKey="name"/>
+                             <YAxis/>
+                             <CartesianGrid strokeDasharray="3 3"/>
+                             <Tooltip/>
+                             <Legend />
+                             <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{r: 8}}/>
+                             <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+                          </LineChart>
                         </div>
-                      </Panel.Body>
-                    </Panel>
-                  </Col>
-              </Row>
-              
-            </Col>
+                      </Col>
+
+                      <Col xs={5}>
+                        <PieChart width={800} height={400}>
+                          <Pie allowDataOverflow={true} dataKey={getName} startAngle={180} endAngle={0} data={pieChartData} cx={200} cy={200} outerRadius={80} fill="#8884d8" />
+                         </PieChart>
+                      </Col>
+                    </Row>
+                  </Panel.Body>
+                </Panel>
+              </Col>
           </Row>
         </Grid>
       </div>

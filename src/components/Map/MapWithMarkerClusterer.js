@@ -11,7 +11,7 @@ import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerC
 const MapWithMarkerClusterer = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyARz_HOqiVeOPfFClTE5W2A1EMz6S6IL1w&v=3.exp&libraries=geometry,drawing,places",
-    loadingElement: <div style={{ height: `100%` }} />,
+    loadingElement: <div style={{ height: `100%`, width: `100%`, display: `flex`, flex: 1, justifyContent: `center`, alignItems: `center` }}>Loading ...</div>,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
